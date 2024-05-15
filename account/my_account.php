@@ -59,6 +59,6 @@
             <i id="top_a_i" class="material-icons" title="Return to Top">^</i>
         </a>
     </div>
-	<script src="account.js"></script>
+	<script type="module" src="account.js"></script>
 </body>
 </html>

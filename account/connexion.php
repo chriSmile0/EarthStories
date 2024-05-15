@@ -109,6 +109,6 @@
 		</div>
 	</article>
 	<footer id="F"></footer>
-	<script src="contact.js"></script>
+	<script type="module" src="contact.js"></script>
 </body>
 </html>

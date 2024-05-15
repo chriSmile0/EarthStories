@@ -356,7 +356,7 @@ function your_inputs2(string $author) {
 	$stmt = $bdd->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
 	$stmt->execute([':a'=> intval($res['author_id'])]);
 	$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	$head = "<section id=\"stories_sec\"><div class=\"div_flex\">";
+	$head = "<section class=\"no_background_color\" id=\"stories_sec\"><div class=\"div_flex\">";
 	if(sizeof($res) < 1)
 		return "";
 	$last_category = $res[0]['category'];

@@ -1,38 +1,8 @@
+import  {writeError, verifMessage}  from '../inc/forms_checks.js';
+import { moreStory } from '../inc/display_elements.js';
 
-var regexMessage = /^[a-zA-Z0-9 ,áàçéèÁÀÇÉÈÍÌÚÙ.-]{1,}$/;
-let messageErr = "Espace et tiret autorisés ainsi que les majuscules";
 let categoryErr = "geographie-culture-voyages-sciences-recits-celebrity";
 let countryErr = "Pays dans la liste des propositions";
-
-/**
- * @brief Write an error in the html render 
- * @param { champ }     a form field 
- * @param { error }     true if display error false for hide error
- * @param { textError } The text to write in the champ.id+error field
- * @return / 
-*/
-function writeError(champ,error,textError) {
-  console.log('champ'+champ.id);
-  if(error) {
-    var elemn = document.getElementById(champ.id+'error');
-    elemn.style.color = "red";
-    elemn.innerText = textError;
-  }
-  else {
-    (document.getElementById(champ.id+'error')).innerText = "";
-  }
-}
-
-/**
- * @brief Check of the content of champMessage target
- * @param { champMessage }  textarea field to check
- * @return / 
-*/
-function verifMessage(champMessage) {
-  var rtn = regexMessage.test(champMessage.value);
-  writeError(champMessage,!rtn,messageErr);
-  return rtn;
-}
 
 /**
  * @brief Check of the content of champMessage target
@@ -142,11 +112,8 @@ document.getElementById('country').oninput = function() {country_display()};
 
 document.getElementById('crea_story').onsubmit = function () {return veriform_crea_s(document.getElementById('crea_story'))};
 
+/*
 function home_toggle_display(elem,t1,t2) {
-  /*if(elem.classList.contains("toggle_aside"))
-    elem.classList.remove("toggle_aside");
-  else 
-    elem.classList.add("toggle_aside");*/
   if(elem.style.display === t1)
     elem.style.display = t2;
   else 
@@ -167,7 +134,7 @@ function moreStory() {
       this.innerHTML = "-";
   }
   
-}
+}*/
 
 let as_account_btn = document.getElementsByClassName('as_account');
 console.log(as_account_btn);

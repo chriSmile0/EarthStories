@@ -4,47 +4,6 @@
 
 
 <body style="visibility: hidden;">
-	<!--<div class="container">
-		<div class="row">
-			<div class="item sticky">STICKY ROW 1</div>
-			<div class="item">1</div>
-			<div class="item">2</div>
-			<div class="item">3</div>
-			<div class="item">4</div>
-			<div class="item">5</div>
-			<div class="item">6</div>
-			<div class="item">7</div>
-			<div class="item">8</div>
-			<div class="item">9</div>
-			<div class="item">10</div>
-		</div>
-		<div class="row">
-			<div class="item sticky">STICKY ROW 2</div>
-			<div class="item">1</div>
-			<div class="item">2</div>
-			<div class="item">3</div>
-			<div class="item">4</div>
-			<div class="item">5</div>
-			<div class="item">6</div>
-			<div class="item">7</div>
-			<div class="item">8</div>
-			<div class="item">9</div>
-			<div class="item">10</div>
-		</div>
-		<div class="row">
-			<div class="item sticky">STICKY ROW 3</div>
-			<div class="item">1</div>
-			<div class="item">2</div>
-			<div class="item">3</div>
-			<div class="item">4</div>
-			<div class="item">5</div>
-			<div class="item">6</div>
-			<div class="item">7</div>
-			<div class="item">8</div>
-			<div class="item">9</div>
-			<div class="item">10</div>
-		</div>
-	</div>-->
 	<header id="HTOP">
 		<h1>EarthStories : Des histoires à perte de vue</h1>
 	</header>
@@ -95,7 +54,7 @@
     </div>
 
 	<footer id="F"></footer>
-	<script src="index.js"></script>
+	<script type="module" src="index.js"></script>
 </body>
 </html>
 
