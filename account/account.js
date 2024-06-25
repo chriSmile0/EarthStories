@@ -104,37 +104,11 @@ function veriform_crea_s(form) {
 document.getElementById("see_stories").addEventListener("click",stories,false);
 document.getElementById("story_crea").addEventListener("click",creation,false);
 
-
-
 document.onload = function() {country_display()};
 
 document.getElementById('country').oninput = function() {country_display()};
 
 document.getElementById('crea_story').onsubmit = function () {return veriform_crea_s(document.getElementById('crea_story'))};
-
-/*
-function home_toggle_display(elem,t1,t2) {
-  if(elem.style.display === t1)
-    elem.style.display = t2;
-  else 
-    elem.style.display = t1;
-}
-
-function moreStory() {
-  console.log(this.id);
-  var numb = (this.id).match(/\d/g);
-  numb = numb.join("");
-  console.log(numb);
-  var elems = document.getElementsByTagName("aside").item(numb-1).childNodes.item(1).childNodes;
-  for(var i = 3 ; i < elems.length ; i++) {
-    home_toggle_display(elems.item(i),"block","none");
-    if(elems.item(i).style.display === "none")
-      this.innerHTML = "+";
-    else 
-      this.innerHTML = "-";
-  }
-  
-}*/
 
 let as_account_btn = document.getElementsByClassName('as_account');
 console.log(as_account_btn);

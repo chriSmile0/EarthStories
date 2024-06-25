@@ -35,16 +35,10 @@ function validate_country($select_elem) {
 	}
 }
 
-function choice_country() {
-	$head = "<div id=\"countries\"class=\"fdiv fdiv__story\"><label for=\"country\">Choix du pays</label><input id=\"country\" type=\"select\" placeholder=\"France\" name=\"country\" aria-labelledby=\"country\" list=\"countryList\"><datalist id=\"countryList\">";
-	$content = "";
-	/*$ct = array_combine($GLOBALS['ar_id'],$GLOBALS['ar_titles']);
-	foreach($ct as $id => $pays) 
-			$content .= "<option id=\"$id\" value=\"$pays\">";*/
-	$end = "</datalist></div>";
-	return $head . $content . $end;
-}
 
+function choice_country() {
+	return "<div id=\"countries\"class=\"fdiv fdiv__story\"><label for=\"country\">Choix du pays</label><input id=\"country\" type=\"select\" placeholder=\"France\" name=\"country\" aria-labelledby=\"country\" list=\"countryList\"><datalist id=\"countryList\"></datalist></div>";
+}
 
 if(isset($_POST['listing'])) {
 	$arr = array();
@@ -58,137 +52,6 @@ if(isset($_POST['listing'])) {
 	array_push($arr,$rt);
 	echo json_encode($arr);
 }
-
-function create_inputs_db_table() {
-	try {
-		$bdd = new PDO('sqlite:' . dirname(__FILE__) . '/i_database.db');
-		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "CREATE TABLE IF NOT EXISTS Inputs (
-				id INTEGER PRIMARY KEY AUTOINCREMENT ,
-				email VARCHAR(40) NOT NULL,
-				geographie TEXT NOT NULL,
-				culture TEXT NOT NULL,
-				voyages TEXT NOT NULL,
-				sciences TEXT NOT NULL,
-				recits TEXT NOT NULL,
-				celebrity TEXT NOT NULL
-			)"; // FOR THE MOMENT WITH ELEMENT IN EACH TEXT SEPARATE WITH specific character '\n' 
-				// for example to parse and display each element in the inputs_display in account
-		$bdd->exec($sql);
-		$bdd = null;
-	}
-	catch (PDOException $e) {
-		var_dump($e->getMessage());
-	}
-}
-
-function display_each_category(string $categorie, string $content) {
-	$head = "<div class=\"profile_inputs\">\n<h4>$categorie</h4>";
-	$content_ = explode("|",$content); 
-	$res = "";
-	foreach($content_ as $c) {
-		$res .= "<p class=\"profile_inputs_p\">$c</p>\n";
-	}
-	$end = "</div>\n";
-	return $head . $res . $end;
-}
-
-function insert_inputs_db_table(array $elems) {
-	$v = (($elems[0] = validate_country($elems[0])) && ($elems[2] = validate_category($elems[2],["geographie","culture","voyages","sciences","recits","celebrity"])) && ($elems[2] = validate_textarea($elems[2],"pseudo")));
-	if(!$v)
-		return FALSE;
-	try {
-		$res = select_inputs_v0($_SESSION['email']);
-		$adds_story = "";
-		$bdd = new PDO('sqlite:' . dirname(__FILE__) . '/i_database.db');
-		$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		if($res[0][$elems[1]] !== "") {
-			$adds_story .=  $res[0][$elems[1]] . "|" . $elems[2];
-			$category = $elems[1];
-			$country = $elems[0];
-			$content = $elems[2];
-			$sql_u = "UPDATE Inputs SET "; // TRIGGER BETTER BUT NOT FOR THE MOMENT 
-			$stmt = $bdd->prepare($sql_u, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-			$stmt->execute([':val'=> ($res[0]['visits'])+1]);
-		}
-		
-		/*$sql = "INSERT INTO Inputs (name,firstname,pseudo,email,pass) 
-				VALUES (:n,:f,:ps,:e,:p)";
-		$stmt = $bdd->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-		$stmt->execute([':n'=> $elems[0],':f'=> $elems[1],':ps'=> $elems[2],':e'=> $elems[3],':p'=> $elems[4]]);*/
-	}
-	catch (PDOException $e) {
-		var_dump($e->getMessage());
-	}
-}
-
-function select_inputs_v0(string $email) {
-	try {
-		$bdd = new PDO('sqlite:' . dirname(__FILE__) . '/i_database.db');
-		//$bdd->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-		$sql = "SELECT * from Inputs WHERE email = :e ";
-		$stmt = $bdd->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-		$stmt->execute([':e'=> $email]);
-		$res = $stmt->fetchAll();
-		if(sizeof($res) == 1) // RE-CHECK OF EMAIL 
-			return $res[0];
-		else 
-			return "";
-	}
-	catch (PDOException $e) {}
-	return "";
-}
-
-function select_inputs(string $email) { 
-	try {
-		$bdd = new PDO('sqlite:' . dirname(__FILE__) . '/i_database.db');
-		$sql = "SELECT * from Inputs WHERE email = :e ";
-		$stmt = $bdd->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-		$stmt->execute([':e'=> $email]);
-		$res = $stmt->fetchAll();
-		if(sizeof($res) == 1) { // RE-CHECK OF EMAIL 
-			$r = "";
-			$contenus = array("La Géographie","La culture","Les Voyages","Les Sciences"
-						,"Les Récits","Les Célébrités");
-			for($i = 2; $i < 8; $i++) {
-				$r .= display_each_category($contenus[$i-2],$res[$i]);
-			}
-			return $r;
-		}
-		else {
-			return "<h4>STORIES HERE</h4>";
-		}
-		
-	}
-	catch (PDOException $e) {}
-	return "<h4>STORIES HERE</h4>";
-}
-
-function your_inputs() {
-	$mail = test_input2($_SESSION['email']); // to comment if use this only with php
-	if(!validate_email($mail))
-		return "mail:$mail  //"; // NOT VALIDE EMAIL 
-	try {
-		$bdd = new PDO('sqlite:' . dirname(__FILE__) . '/database.db');
-		$sql = "SELECT * from Accounts WHERE email = :e ";
-		$stmt = $bdd->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
-		$stmt->execute([':e'=> $mail]);
-		$res = $stmt->fetchAll();
-		if(sizeof($res) == 1) { // RE-CHECK OF EMAIL 
-			return select_inputs($mail);
-		}
-		
-	}
-	catch (PDOException $e) {}
-	return "/__";
-}
-/**--------------------------V2 DATABASE SCHEMA --------------------- */
-/**
- * AUTHORS: AUTHOR_ID|PSEUDO|
- * STORIES 	STORY_ID|AUTHOR_ID|COUNTRY|STORY
- * 			
- * 
-*/
 
 function create_authors_db_table() {
 	try {
@@ -341,7 +204,6 @@ function display_story_by_cat_and_country(string $country, string $category) {
 	$stmt = $bdd->prepare($sql, [PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY]);
 	$stmt->execute([':ca'=> $category, ':co'=>$country]);
 	$res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-	//var_dump($res);
 	$r = "";
 	foreach($res as $row) 
 		$r .= display_story_and_author($row);
@@ -375,15 +237,10 @@ function your_inputs2(string $author) {
 }
 
 if(isset($_POST['submitstory'])) {
-	var_dump("OK");
-	var_dump($_POST);
 	if(insert_story(array($_SESSION['userName'],$_POST['country'],$_POST['categorie'],$_POST['story'])))
 		var_dump("insert OK \n");
 	else
 		var_dump("ERROR INSERT \n");
 
 }
-
-//var_dump(select_story_db_table(2)); // OK 
-//var_dump(display_story_by_cat_and_country("France","geographie")); OK 
 ?>

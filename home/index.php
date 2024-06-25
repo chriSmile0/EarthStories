@@ -1,4 +1,3 @@
-<?php include 'map.php'; ?>
 <?php require '../inc/header.php';?>
 <?php echo header_head("");?>
 

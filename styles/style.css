@@ -29,7 +29,6 @@ header {
 	background-color:  rgb(140, 140, 255);
 }
 
-
 body {
 	margin : auto;
 	background-color : rgb(212, 155, 81);
@@ -146,7 +145,6 @@ form button {
     border-width: 0.15px; 
     padding: 5px 0px 5px 0px;
 }
-
 
 #top {
     overflow: visible;

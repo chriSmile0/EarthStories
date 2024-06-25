@@ -146,13 +146,11 @@ function track(e) {
         stories();
         document.getElementsByTagName("aside").item(0).scrollIntoView({behavior:"smooth"});
       }
-      else {
-        console.log("Error");
-      }
     };
   }
-  xmlhttp.open("GET","i_map.php?q="+recup_info,true);
-  xmlhttp.send();
+  xmlhttp.open("POST","i_map.php",true);
+  xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+  xmlhttp.send("q="+recup_info);
 }
 
 (document.getElementById("btn")).addEventListener("click", track, false);

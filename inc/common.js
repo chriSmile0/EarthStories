@@ -1,17 +1,11 @@
-
-
 function changeWindow() {
 	ThemeMode(localStorage.getItem("Theme"));
-
 }
+
 window.addEventListener('load',changeWindow,false);
 
 document.onreadystatechange = function () {
-	if (document.readyState !== "complete") {
-		console.log("not loaded");
-	}
-	else {
-		console.log("loaded");
+	if(document.readyState === "complete") {
 		document.body.style.visibility = "visible";
 		changeIconConnexion();
 		ThemeMode(localStorage.getItem("Theme"));
@@ -56,13 +50,10 @@ function lightMode() {
 	document.getElementById("BThemeMode").style.backgroundColor = "mediumseagreen";
 	document.getElementById("BConnexion").style.backgroundColor = "mediumseagreen";
 	document.getElementById("ThemeIcon").innerHTML =  "brightness_low";
-	/*document.getElementById("ThemeIcon").style.color = "black";
-	document.getElementById("ConnexionIcon").style.color = "black";*/
 	var r = document.querySelector(":root");
 	r.style.setProperty('--theme-color',"rgb(150, 155, 150)");
 	r.style.setProperty('--blk_or_wht',"black");
 	r.style.setProperty('--blk_or_org',"rgb(212, 155, 81)");
-	//(document.querySelector(":root")).style.setProperty('--theme-color',"rgb(150, 155, 150)");
 	document.getElementsByTagName("body")[0].style.backgroundColor = "rgb(212, 155, 81)";
 	const paths = document.querySelectorAll('path');
 	paths.forEach((path) => {
@@ -79,9 +70,6 @@ function darkMode() {
 	r.style.setProperty('--theme-color',"black");
 	r.style.setProperty('--blk_or_wht',"white");
 	r.style.setProperty('--blk_or_org',"black");
-	/*document.getElementById("ThemeIcon").style.color = "white";
-	document.getElementById("ConnexionIcon").style.color = "white";*/
-	//(document.querySelector(":root")).style.setProperty('--theme-color',"black");
 	document.getElementsByTagName("body")[0].style.backgroundColor = "black";
 	const paths = document.querySelectorAll('path');
 	paths.forEach((path) => {
@@ -91,8 +79,6 @@ function darkMode() {
 
 function changeIconConnexion() {
 	pathname = window.location.pathname;
-	console.log(pathname);
-	console.log("here");
 	if(pathname == "/EarthStories/account/connexion.php") { // toggle effect
 		document.getElementById("ConnexionIcon").innerHTML = "home";
 		document.getElementById('ConnexionIcon').classList.add('material-icons');
@@ -128,19 +114,7 @@ function connexion() {
 	  localStorage.setItem("Theme", "light");
 	else 
 	  localStorage.setItem("Theme", "dark");
-	console.log(window.location.pathname);
 	session_info(redirect_usage);
-	//DEMAND_SESSION_INFO 
-	/*var rep = session_info(rtn_session_info);
-	var redirect = '/EarthStories/account/connexion.php';
-	if(rep !== undefined)
-		redirect = '/EarthStories/account/my_account.php';
-	console.log(rep);*/
-	/*if(window.location.pathname == '/EarthStories/home/')
-		window.location.href = redirect;
-	else {
-		window.location.href = "/EarthStories/home/";*/
-	//}
 }
 
 function redirect_usage(reponse) {
@@ -148,19 +122,14 @@ function redirect_usage(reponse) {
 	var redirect = '/EarthStories/account/connexion.php';
 	if(rep !== null)
 		redirect = '/EarthStories/account/my_account.php';
-	console.log(rep);
-	console.log(redirect);
+
 	if(window.location.pathname == '/EarthStories/home/') {
 		window.location.assign(redirect);
-		setTimeout(() => {
-
-		},700); // wait loaded next page 
+		setTimeout(() => {},700); // wait loaded next page 
 	}
 	else {
 		window.location.assign("/EarthStories/home/");
-		setTimeout(() => {
-
-		},700); // wait loaded next page
+		setTimeout(() => {},700); // wait loaded next page
 	}
 }
 

@@ -20,7 +20,6 @@ let MdpErr= "Des lettres minuscules ET majuscules, au moins un caractère spéci
  * @return / 
 */
 export function writeError(champ,error,textError) {
-  console.log('champ'+champ.id);
   if(error) {
     var elemn = document.getElementById(champ.id+'error');
     elemn.style.color = "red";

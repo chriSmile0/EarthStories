@@ -1,5 +1,17 @@
 <?php
 
+function readlines($filename) {
+	$str = file_get_contents($filename); /// -> more simple
+	return explode("\n",$str);
+}
+
+$ar_id = readlines("../dev/extract_ids.txt");
+$ar_titles = readlines("../dev/extract_name_fr.txt");
+$ct = array_combine($ar_id,$ar_titles);
+
+/*create_map*/
+/*
+
 function findEndline(string $line) {
 	$pos = strpos($line,"\n");
 	return $pos;
@@ -22,20 +34,6 @@ function findSpace(string $line) {
 	return strpos($line,' ');
 }
 
-function readlines($filename) {
-	$str = file_get_contents($filename); /// -> more simple
-	return explode("\n",$str);
-}
-
-$style = "stroke-opacity:1;stroke-width:0.7015748;stroke-miterlimit:4;stroke-dasharray:none;fill-opacity:1";
-//$style = "fill:#00785a;stroke:white;stroke-opacity:1;stroke-width:1";
-$d = "";
-
-
-function combine_tab(array $tab1,array $tab2) {
-	return array_combine($tab1,$tab2);
-}
-
 function html_a(string $contenu) {
 	return "<a>$contenu</a>";
 }
@@ -46,16 +44,13 @@ function html_svg(string $path) {
 	return $retour;
 }
 
-function html_path(string $path,string  $style, string $title, string $id) {
+function html_path(string $path, string $style, string $title, string $id) {
 	return "<path d=\"$path\" style=\"$style\" title=\"$title\" id=\"$id\"/>";
 }
 
-$ar_id = readlines("../dev/extract_ids.txt");
-$ar_titles = readlines("../dev/extract_name_fr.txt");
-$ct = array_combine($ar_id,$ar_titles);
 
-/*create_map*/
-/*
+
+$style = "stroke-opacity:1;stroke-width:0.7015748;stroke-miterlimit:4;stroke-dasharray:none;fill-opacity:1";
 function create_map() {
 	$style = $GLOBALS['style'];
 	$all_paths = readlines("../dev/extract_path.txt");
